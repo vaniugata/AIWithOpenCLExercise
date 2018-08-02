@@ -1,4 +1,4 @@
-CPP = main.cpp KernelParser.cpp OpenCLMgr.cpp
+CPP = main.cpp KernelParser.cpp OpenCLMgr.cpp MNISTData.cpp
 FLAGS = -g -std=c++14
 LIBS = -l OpenCL
 

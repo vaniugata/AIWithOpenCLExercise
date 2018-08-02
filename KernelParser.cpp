@@ -18,7 +18,7 @@ KernelParser::~KernelParser(){
 
 void KernelParser::read_file( const std::string& path ){
 
-	std::ifstream file( path );
+	std::ifstream file( path.c_str() );
 	
 	if( !file.is_open() ){
 		std::cerr << "Failed to open file: " << path << "\n";

@@ -2,6 +2,7 @@
 
 #include "KernelParser.h"
 #include "OpenCLMgr.h"
+#include "MNISTData.h"
 
 int main(){
 
@@ -10,13 +11,12 @@ int main(){
     ocl_mgr.build_program_from_source("./backprop.ocl", "backpropagate");
 
     float data1[] = {-12,2,3,4,5,6};
-    // size_t size = sizeof(data) / sizeof(*data);
-    float data2[] = {1,2,3,4,5,6};
 
+    MNISTData data_set;
+    uc*** training_data = data_set.ReadImages("./DataSet/train-images-idx3-ubyte");
+    uc* training_labels = data_set.ReadLabels("./DataSet/train-labels-idx1-ubyte");
 
     cl::Buffer* buffer1 = ocl_mgr.send_data_to_kernel( 0, data1, sizeof(data1), CL_MEM_READ_WRITE, true );
-    cl::Buffer* buffer2 = ocl_mgr.send_data_to_kernel( 1, data2, sizeof(data2), CL_MEM_READ_WRITE, true );
-
     ocl_mgr.set_idx_range( cl::NDRange(10), cl::NDRange(1) );
 
     float* result = ocl_mgr.read_data_from_kernel<float>( buffer1, sizeof(data1), false, 0 );
@@ -28,7 +28,6 @@ int main(){
 
     delete[] result;
     delete buffer1;
-    delete buffer2;
 
     return 0;
 }
