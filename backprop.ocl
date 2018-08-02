@@ -1,0 +1,7 @@
+
+__kernel void backpropagate( __global float* input1, __global float* input2 ){
+	
+	__private int i = get_global_id(0);
+	input1[i] += pow(input1[i], 2);
+}
+
